@@ -6,14 +6,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
+    .stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: rgba(255,255,255,0.6);
+  border-radius: 50%;
+  animation: twinkle 4s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
     body {
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(#0f2027, #203a43, #2c5364);
-      font-family: 'Georgia', serif;
-      color: #f5f5f5;
-      line-height: 1.8;
-    }
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background:
+    linear-gradient(
+      rgba(90, 70, 130, 0.65),
+      rgba(90, 70, 130, 0.65)
+    ),
+    url('bg.jpg') center/cover no-repeat;
+  font-family: 'Georgia', serif;
+  color: #f5f5f5;
+  line-height: 1.8;
+}
 
     .container {
       max-width: 700px;
@@ -28,11 +57,16 @@
     }
 
     .paragraph {
-      margin-bottom: 40px;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 1.5s ease forwards;
-    }
+  margin-bottom: 40px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1s ease;
+}
+
+.paragraph.show {
+  opacity: 1;
+  transform: translateY(0);
+}
 
     .paragraph:nth-child(1) { animation-delay: 0.5s; }
     .paragraph:nth-child(2) { animation-delay: 1.5s; }
@@ -68,12 +102,28 @@
   </style>
 </head>
 
-<body>
+<body> <div class="stars">
+  <div class="star" style="top:10%; left:20%;"></div>
+  <div class="star" style="top:30%; left:70%;"></div>
+  <div class="star" style="top:60%; left:40%;"></div>
+  <div class="star" style="top:80%; left:80%;"></div>
+  <div class="star" style="top:50%; left:10%;"></div>
+</div>
 
   <!-- 🎧 MUSIK INSTRUMENT AUTO -->
-  <audio autoplay loop>
-    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_9e8c8a9d41.mp3" type="audio/mpeg">
-  </audio>
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/audio/2022/10/25/audio_946b3f2c57.mp3" type="audio/mpeg">
+</audio>
+
+<button class="music-btn" onclick="playMusic()">
+  🤍 sentuh di sini
+</button>
+
+<script>
+  function playMusic() {
+    document.getElementById('bgMusic').play();
+  }
+</script>
 
   <div class="container">
     <h1>Happy Birthday, Kak Fathur</h1>
@@ -91,7 +141,14 @@
         Namun, hal itu tetap tidak bisa menjadi penghalang perasaan hangat nan penuh cinta ini untuk terus tumbuh
         sejak empat bulan yang lalu di mana rasa sukamu terhadapku akhirnya terbalaskan. 
     </div>
-
+    
+<img src="memory.jpg" style="
+  width:100%;
+  margin:50px 0;
+  border-radius:16px;
+  opacity:0.85;
+">
+    
     <div class="paragraph">
         Selamat ulang tahun yang ke-20, Kak. 
         Di sini, di Jawa, aku selalu mengirim doa baik untukmu meskipun kita saling jauh. 
@@ -162,17 +219,29 @@
 
     <!-- ▶️ TOMBOL LAGU LIRIK -->
     <button class="music-btn" onclick="document.getElementById('song').play()">
-      ▶️ Putar Lagu
+      ▶️ for u
     </button>
 
     <audio id="song">
-      <source src="https://cdn.pixabay.com/audio/2023/03/14/audio_2d4b5c5f8f.mp3" type="audio/mpeg">
+  <source src="https://cdn.pixabay.com/audio/2022/11/23/audio_7e7b2b3e5f.mp3" type="audio/mpeg">
     </audio>
 
     <footer>
-      dibuat oleh Rena 🤍
+      made by cutiepie 🤍
     </footer>
   </div>
+  <script>
+  const paragraphs = document.querySelectorAll('.paragraph');
 
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+      }
+    });
+  }, { threshold: 0.2 });
+
+  paragraphs.forEach(p => observer.observe(p));
+</script>
 </body>
 </html>
