@@ -142,8 +142,6 @@ footer {
       </p>
     </div>
 
-<img src="memory.jpg" alt="memory">
-
   <div class="paragraph">
       <p>
         Selamat ulang tahun yang ke-20, Kak. 
@@ -235,26 +233,22 @@ footer {
 
 <script>
 const instrument = document.getElementById("instrument");
-const song = document.getElementById("song");
 
-function startInstrument(){
-  instrument.muted = false;
+function playInstrument(){
+  instrument.currentTime = 0;
   instrument.play();
-}
-
-function playSong(){
-  song.play();
 }
 
 const observer = new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
-      e.target.classList.add('show')
+      e.target.classList.add('show');
     }
-  })
-},{threshold:.2})
+  });
+},{threshold:0.2});
 
-document.querySelectorAll('.paragraph').forEach(p=>observer.observe(p))
+document.querySelectorAll('.paragraph')
+  .forEach(p=>observer.observe(p));
 </script>
 
 </body>
